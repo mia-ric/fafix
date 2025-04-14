@@ -50,3 +50,8 @@ folgt vorgehen:
 3. Wähle die gewünschte Kategorie (z. B. IndexedDB, Lokaler Speicher).
 4. Mit Rechtsklick auf die Einträge kannst du diese gezielt löschen.
 5. Über den Button "Website-Daten löschen" kannst du alles auf einmal entfernen.
+
+## Screenshots
+![Editor](./assets/editor.png)
+
+![Charts](./assets/charts.png)
