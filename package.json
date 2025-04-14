@@ -1,0 +1,43 @@
+{
+    "name": "fafix",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc -b && vite build",
+        "watch": "vite build --watch",
+        "server": "php -S localhost:7878 -t dist",
+        "serve": "run-p watch server",
+        "preview": "vite preview"
+    },
+    "engines": {
+        "node": "^22.0"
+    },
+    "dependencies": {
+        "@tabler/icons-vue": "^3.31.0",
+        "@tiptap/extension-link": "^2.11.7",
+        "@tiptap/extension-text-align": "^2.11.7",
+        "@tiptap/extension-underline": "^2.11.7",
+        "@tiptap/pm": "^2.11.7",
+        "@tiptap/starter-kit": "^2.11.7",
+        "@tiptap/vue-3": "^2.11.7",
+        "apexcharts": "^4.5.0",
+        "dexie": "^4.0.11",
+        "vue": "^3.5.13",
+        "vue3-apexcharts": "^1.8.0"
+    },
+    "devDependencies": {
+        "@tailwindcss/typography": "^0.5.16",
+        "@types/node": "^22.13.14",
+        "@vitejs/plugin-vue": "^5.2.3",
+        "@vue/tsconfig": "^0.7.0",
+        "autoprefixer": "^10.4.21",
+        "npm-run-all2": "^7.0.2",
+        "postcss": "^8.5.3",
+        "postcss-import": "^16.1.0",
+        "tailwindcss": "3.0",
+        "typescript": "^5.8.2",
+        "vite": "^6.2.3",
+        "vue-tsc": "^2.2.8"
+    }
+}
