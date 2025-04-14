@@ -54,4 +54,4 @@ folgt vorgehen:
 ## Screenshots
 ![Editor](./assets/editor.png)
 
-![Charts](./assets/charts.png)
+![Charts](./assets/chart.png)
