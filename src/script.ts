@@ -5,6 +5,7 @@ import Editor from './components/Editor.vue';
 import prepareDemo from './core/prepare-demo';
 import manageBooks from './core/manage-books';
 import manageStatistics from './core/manage-statistics';
+import manageUpdater from './core/manage-updater';
 import ready from './utils/ready';
 import select from './utils/select';
 
@@ -12,6 +13,12 @@ import select from './utils/select';
  * Main Runtime Handler
  */
 async function main() {
+    if (!select('[title="Mein Profil"]')) {
+        console.error('FAFIX: Du bist nicht angemeldet.');
+        return;
+    }
+
+    // Load Assets
     if (import.meta.env.PROD) {
         GM_addStyle(GM_getResourceText("customCSS"));
     } else {
@@ -33,8 +40,13 @@ async function main() {
         instance.setTextarea(textarea);
     }
 
+    // Store Force Update
+    if (!window.location.pathname.startsWith('/?a=b') && !window.location.pathname.startsWith('/stats')) {
+        await manageUpdater();
+    }
+
     // Store Books
-    if (select('#ffcbox-storylist')) {
+    if (!window.location.pathname.startsWith('/?a=b')) {
         await ready();
         await manageBooks();
     }
@@ -51,6 +63,11 @@ async function main() {
             statsTitle.parentElement.insertBefore(statsChart, select('hr', statsTitle.parentElement));
             createApp(Charts).mount(statsChart);
         }
+    }
+
+    // Close Window when used for updating purposes only
+    if (window.location.hash === '#fafix:updater') {
+        window.close();
     }
 }
 main();

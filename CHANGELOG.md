@@ -1,6 +1,10 @@
 FaFiX - Changelog
 =================
 
+## Version 0.1.3 (Alpha)
+- Add: Books & Statistics Updater.
+- Add: Check if user is logged in.
+
 ## Version 0.1.2 (Alpha)
 - Add: Additional 'books' table.
 - Add: New local/session storage handler and composable.

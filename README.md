@@ -23,6 +23,17 @@ _Work in Progress_
 5. **Fertig** - Das Script ist nun aktiv. Du kannst es jederzeit im Dashboard aktivieren, 
    deaktivieren oder bearbeiten.
 
+## Aktualisierung
+1. **Tampermonkey öffnen** – Klicke auf das Tampermonkey-Icon in deiner Browser-Toolbar und wähle
+   **Dashboard** oder **Übersicht** aus dem Menü.
+2. **FaFiX-Script auswählen** – Suche in der Liste nach dem **FaFiX**-Script und klicke auf die 
+   Checkbox links daneben.
+3. **Script aktualisieren** – Klicke oben im neuen Auswahlfeld auf **Aktualisieren** (Trigger Update) 
+   und anschließend auf **Start**, um die neueste Version zu laden.
+4. **Aktualisierung bestätigen** – Eine Vorschau des aktualisierten Scripts wird angezeigt. Klicke 
+   auf **Überschreiben**, um das Update zu übernehmen.
+5. **Fertig** – Das Script wurde erfolgreich auf die neueste Version aktualisiert und ist einsatzbereit.
+
 ## Speicherung der Daten
 Alle Daten werden ausschließlich in deinem Browser gespeichert – entweder in der **IndexedDB**, im 
 **localStorage** oder im **sessionStorage**. Das bedeutet: Deine Daten bleiben lokal auf deinem Gerät 
