@@ -25,6 +25,7 @@ export default defineConfig({
     plugins: [vue()],
     build: {
         outDir: 'dist',
+        minify: !dev, 
         lib: {
             entry: 'src/script.ts',
             name: 'FaFiX',

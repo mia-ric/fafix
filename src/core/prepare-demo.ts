@@ -1,9 +1,22 @@
+import { useBooks } from "../composables/use-books";
 import { useStatistics } from "../composables/use-statistics";
 
-export async function installDemonstrationData() {
+export default async function prepareDemo() {
+    const books = useBooks();
+    books.insert({
+        status: 0,
+        title: 'A very long title',
+        link: 'demo://1',
+        category: [],
+        genres: [],
+        chapters: 21,
+        words: 27842,
+        created_at: '2025-03-01',
+        updated_at: '2025-04-14',
+    });
+
     const stats = useStatistics();
     const oneWeekAgo = new Date((new Date).getTime() - 7 * 24 * 60 * 60 * 1000);
-
     {
         let views = 3500;
         for (let i = 0; i < 7; i++) {
