@@ -91,6 +91,9 @@ watch(statCurrent, async (current) => {
             type: 'category',
             categories: statSeries.value[0].data.map((point: any) => point.x)
         },
+        yaxis: {
+            forceNiceScale: true
+        },
         title: {
             text: 'Aufrufe'
         },

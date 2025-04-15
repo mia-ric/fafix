@@ -1,6 +1,10 @@
 FaFiX - Changelog
 =================
 
+## Version 0.1.4 (Alpha)
+- Fix: Place the statistics below the horizontal ruler again.
+- Fix: Remove floating point numbers in the y-axis of the chart.
+
 ## Version 0.1.3 (Alpha)
 - Add: Books & Statistics Updater.
 - Add: Check if user is logged in.

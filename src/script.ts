@@ -60,7 +60,7 @@ async function main() {
         let statsTitle = select('h2');
         if (statsTitle && statsTitle.parentElement) {
             const statsChart = document.createElement('div');
-            statsTitle.parentElement.insertBefore(statsChart, select('hr', statsTitle.parentElement));
+            statsTitle.parentElement.insertBefore(statsChart, statsTitle.nextElementSibling?.nextElementSibling || null);
             createApp(Charts).mount(statsChart);
         }
     }
