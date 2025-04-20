@@ -1,6 +1,9 @@
 FaFiX - Changelog
 =================
 
+## Version 0.2.1 (Beta)
+- Fix: Incorrect width in the statistics note overlay and button.
+
 ## Version 0.2.0 (Beta)
 - Add: Check for the latest installed version of FAFIX (show alert if new message is available).
 - Add: New overlay button for configuration access and version indication.

@@ -101,7 +101,7 @@ function onClickOutside(event: any) {
     @apply relative flex flex-row justify-end;
 
     & .note-badge {
-        @apply rounded px-3 py-1.5 text-xs cursor-pointer;
+        @apply w-[190px] rounded px-3 py-1.5 text-xs cursor-pointer text-center;
         @apply transition-colors duration-200 ease-in-out;
 
         &.badge-error {
@@ -130,7 +130,7 @@ function onClickOutside(event: any) {
     }
 
     & .note-popover {
-        @apply absolute w-full max-w-sm rounded-md p-4 text-sm shadow;
+        @apply absolute w-96 rounded-md p-4 text-sm shadow;
         @apply bg-white;
         z-index: 900;
 
