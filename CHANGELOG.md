@@ -1,6 +1,9 @@
 FaFiX - Changelog
 =================
 
+## Version 0.2.2 (Beta)
+- Fix: Weird style-issue on Firefox-based browsers.
+
 ## Version 0.2.1 (Beta)
 - Fix: Incorrect width in the statistics note overlay and button.
 

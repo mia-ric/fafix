@@ -20,7 +20,11 @@ async function main() {
 
     // Load Assets
     if (import.meta.env.PROD) {
-        GM_addStyle(GM_getResourceText("customCSS"));
+        let style = document.createElement('link');
+        style.rel = 'stylesheet';
+        style.type = 'text/css';
+        style.href = 'https://mia-ric.github.io/fafix.css';
+        document.head.append(style);
     } else {
         await prepareDemo();
         let charts = select('.charts');
