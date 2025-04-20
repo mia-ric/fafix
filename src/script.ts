@@ -46,11 +46,13 @@ async function main() {
     }
 
     // Append Stats Component
-    let statsTitle = select('h2');
-    if (statsTitle && statsTitle.parentElement && !window.location.hash.includes('fafix:updater')) {
-        const statsChart = document.createElement('div');
-        statsTitle.parentElement.insertBefore(statsChart, statsTitle.nextElementSibling?.nextElementSibling || null);
-        createApp(Charts).mount(statsChart);
+    if (window.location.pathname.startsWith('/stats') && !window.location.hash.includes('fafix:updater')) {
+        let statsTitle = select('h2');
+        if (statsTitle && statsTitle.parentElement) {
+            const statsChart = document.createElement('div');
+            statsTitle.parentElement.insertBefore(statsChart, statsTitle.nextElementSibling?.nextElementSibling || null);
+            createApp(Charts).mount(statsChart);
+        }
     }
 
     // Append FAFIX Overlay

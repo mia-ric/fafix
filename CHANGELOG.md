@@ -1,6 +1,9 @@
 FaFiX - Changelog
 =================
 
+## Version 0.2.3 (Beta)
+- Fix: Missing if-condition on statistics vue component.
+
 ## Version 0.2.2 (Beta)
 - Fix: Weird style-issue on Firefox-based browsers.
 
