@@ -1,7 +1,7 @@
 import { useDatabase, type Book } from "./use-database";
 
 export function useBooks() {
-    const db = useDatabase();
+    const { db } = useDatabase();
 
     /**
      * Insert Book

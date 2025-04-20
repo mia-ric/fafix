@@ -1,19 +1,19 @@
 import './styles/theme.css';
 import { createApp } from 'vue';
-import Charts from './components/Charts.vue';
+import Charts from './components/Charts/Charts.vue';
 import Editor from './components/Editor.vue';
 import prepareDemo from './core/prepare-demo';
 import manageBooks from './core/manage-books';
 import manageStatistics from './core/manage-statistics';
-import manageUpdater from './core/manage-updater';
 import ready from './utils/ready';
 import select from './utils/select';
+import Overlay from './components/Overlay/Overlay.vue';
 
 /**
  * Main Runtime Handler
  */
 async function main() {
-    if (!select('[title="Mein Profil"]')) {
+    if (import.meta.env.PROD && !select('[title="Mein Profil"]')) {
         console.error('FAFIX: Du bist nicht angemeldet.');
         return;
     }
@@ -29,40 +29,43 @@ async function main() {
         }
     }
 
+    // Store Books Data
+    if (window.location.search.includes('a=b')) {
+        await ready();
+        await manageBooks();
+    }
+
+    // Store Statistics Data
+    if (window.location.pathname.startsWith('/stats')) {
+        await ready();
+        await manageStatistics();
+    }
+
+    // Append Stats Component
+    let statsTitle = select('h2');
+    if (statsTitle && statsTitle.parentElement && !window.location.hash.includes('fafix:updater')) {
+        const statsChart = document.createElement('div');
+        statsTitle.parentElement.insertBefore(statsChart, statsTitle.nextElementSibling?.nextElementSibling || null);
+        createApp(Charts).mount(statsChart);
+    }
+
+    // Append FAFIX Overlay
+    if (!window.location.hash.includes('fafix:updater')) {
+        let overlay = document.createElement('div');
+        overlay.style = `width:0;height:0;display:contents;`;
+        document.body.append(overlay);
+        createApp(Overlay).mount(overlay) as any;
+    }
+
     // Append TipTap Editor
     let textarea = select('#textarea-chapter');
-    if (textarea && textarea.parentElement) {
+    if (textarea && textarea.parentElement && !window.location.hash.includes('fafix:updater')) {
         const vueContainer = document.createElement('div');
         textarea.parentElement.append(vueContainer);
 
         const app = createApp(Editor);
         const instance = app.mount(vueContainer) as any;
         instance.setTextarea(textarea);
-    }
-
-    // Store Force Update
-    if (!window.location.pathname.startsWith('/?a=b') && !window.location.pathname.startsWith('/stats')) {
-        await manageUpdater();
-    }
-
-    // Store Books
-    if (!window.location.pathname.startsWith('/?a=b')) {
-        await ready();
-        await manageBooks();
-    }
-
-    // Store Statistics
-    if (window.location.pathname.startsWith('/stats')) {
-        await ready();
-        await manageStatistics();
-
-        // Append Stats Component
-        let statsTitle = select('h2');
-        if (statsTitle && statsTitle.parentElement) {
-            const statsChart = document.createElement('div');
-            statsTitle.parentElement.insertBefore(statsChart, statsTitle.nextElementSibling?.nextElementSibling || null);
-            createApp(Charts).mount(statsChart);
-        }
     }
 
     // Close Window when used for updating purposes only

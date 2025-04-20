@@ -1,6 +1,6 @@
 <template>
     <div class="stats">
-        <ChartsNavbar :tabs="statTabs" v-model="statCurrent" />
+        <ChartsNavbar :tabs="statTabs" v-model="statCurrent" v-if="statTabs" />
         
         <div class="stats-chart">
             <VueApexCharts v-if="statOptions && statSeries"
@@ -18,6 +18,11 @@
                 </div>
             </Transition>
         </div>
+
+        <div class="flex flex-row items-center justify-between mt-4">
+            <ChartsSummary />
+            <ChartsNote :danger="insufficient" />
+        </div>
     </div>
 </template>
 
@@ -26,11 +31,13 @@ import { IconLoaderQuarter } from '@tabler/icons-vue';
 import type { ApexOptions } from 'apexcharts';
 import VueApexCharts from 'vue3-apexcharts';
 import { computed, onMounted, ref, watch } from 'vue';
-import ChartsNavbar, { type TabItem} from './ChartsNavbar.vue';
-import { useBooks, type Book } from '../composables/use-books';
-import { useStatistics } from '../composables/use-statistics';
-import { useStorage } from '../composables/use-storage';
-import { MarkerColors, MarkerIcons, type MarkerKeys } from '../enums/markers';
+import { useBooks, type Book } from '../../composables/use-books';
+import { useStatistics } from '../../composables/use-statistics';
+import { useStorage } from '../../composables/use-storage';
+import { MarkerColors, MarkerIcons, type MarkerKeys } from '../../enums/markers';
+import ChartsNavbar, { type TabItem } from './ChartsNavbar.vue';
+import ChartsNote from './ChartsNote.vue';
+import ChartsSummary from './ChartsSummary.vue';
 
 // States
 const loading = ref<boolean>(false);
@@ -54,7 +61,7 @@ const storage = useStorage();
 // Component Mounted
 onMounted(async () => {
     statBooks.value = await books.get();
-    statCurrent.value = storage.local.get('statistics_current_book', statTabs.value[0].value);
+    statCurrent.value = storage.local.get('statistics_current_book', statTabs.value ? statTabs.value[0]?.value || null : null);
 });
 
 // Watch current Book
@@ -95,7 +102,7 @@ watch(statCurrent, async (current) => {
             forceNiceScale: true
         },
         title: {
-            text: 'Aufrufe'
+            text: 'Tägliche Aufrufe & Events'
         },
         dataLabels: {
             enabled: false
@@ -108,10 +115,11 @@ watch(statCurrent, async (current) => {
         },
         tooltip: {
             y: {
-                formatter: function (value, { series, seriesIndex, dataPointIndex, w }) {
+                formatter: function (value, { seriesIndex, dataPointIndex, w }) {
                     const point = w.config.series[seriesIndex].data[dataPointIndex];
-                    const total = point.meta?.totalViews ?? '0';
-                    return `${total} (+${value})`;
+                    const total = point.meta?.totalViews ?? 0;
+                    const formatter = new Intl.NumberFormat('de-DE');
+                    return `${formatter.format(total)} (+${formatter.format(value)})`;
                 }
             }
         }

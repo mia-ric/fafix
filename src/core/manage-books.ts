@@ -6,6 +6,7 @@ import select from "../utils/select";
 export default function () {
     const storyList = document.querySelector('.container-storylist');
     if (!storyList) {
+        console.error('FAFIX - ofno');
         return;
     }
 

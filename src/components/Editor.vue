@@ -138,7 +138,7 @@ const wordCount = computed(() => {
 });
 
 // Component mounted
-onMounted(() => {
+onMounted(async () => {
     editor.value = new Editor({
         extensions: [
             StarterKit,

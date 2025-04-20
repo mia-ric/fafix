@@ -53,5 +53,8 @@ export default defineConfig({
     },
     define: {
         'process.env.NODE_ENV': JSON.stringify('dev'),
+        'CURRENT_VERSION': JSON.stringify(pkg.version),
+        'GITHUB_REPO_URL': JSON.stringify('https://www.github.com/mia-ric/fafix'),
+        'GITHUB_TAGS_URL': JSON.stringify('https://api.github.com/repos/mia-ric/fafix/tags'),
     },
 });
