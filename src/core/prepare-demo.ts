@@ -1,7 +1,11 @@
 import { useBooks } from "../composables/use-books";
 import { useStatistics } from "../composables/use-statistics";
+import { useSystem } from "../composables/use-system";
 
 export default async function prepareDemo() {
+    const system = useSystem();
+    system.reset();
+
     const books = useBooks();
     books.insert({
         status: 0,
@@ -32,7 +36,7 @@ export default async function prepareDemo() {
                     reviews: i > 1 ? 1 : 0,
                     recommendations: i > 3 ? 1 : 0,
                     views,
-                    favorites: i > 5 ? 1 : 0,
+                    favorites: i > 5 ? 3 : 4,
                     bookmarks: i > 2 ? 1 : 0,
                     offlineLibraries: i > 4 ? 1 : 0,
                     bookshelves: i > 2 ? 1 : 0,

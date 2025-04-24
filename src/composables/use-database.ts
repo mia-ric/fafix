@@ -41,9 +41,13 @@ export function useDatabase() {
     });
 
     db.version(2).stores({
-        statistics: '++id, title, link, chapters, words, reviews, recommendations, views, favorites, bookmarks, offlineLibraries, bookshelves, date, time',
         books: '++id, status, title, link, *category, *genres, chapters, words, created_at, updated_at',
+        statistics: '++id, title, link, chapters, words, reviews, recommendations, views, favorites, bookmarks, offlineLibraries, bookshelves, date, time',
     });
+
+    //db.version(3).stores({
+    //    stories: '++id, title, link, chapter'
+    //});
 
     /**
      * Import Data

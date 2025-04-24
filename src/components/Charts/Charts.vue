@@ -200,6 +200,7 @@ function calculateDailyStats(data: any[]) {
                 return;
             }
 
+            const mode = today[key] > yesterday[key] ? true : false;
             const enumKey = key[0].toUpperCase() + key.slice(1) as MarkerKeys;
 
             annotations.points.push({
@@ -210,9 +211,8 @@ function calculateDailyStats(data: any[]) {
                     offsetY: 25 * changed,
                     fillColor: MarkerColors[enumKey],
                     strokeColor: MarkerColors[enumKey],
-                    cssClass: `apexcharts-icon-${key}`
+                    cssClass: `apexcharts-icon-${key} ${mode ? '' : 'apexcharts-annotation-lost'}`
                 },
-                
                 image: {
                     path: `data:image/svg+xml;base64,${btoa(MarkerIcons[enumKey])}`,
                     width: 16,
@@ -282,5 +282,14 @@ function calculateDailyStats(data: any[]) {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+:deep(.apexcharts-annotation-lost) {
+    fill: rgb(120 120 120);
+    stroke: rgb(120 120 120);
+}
+
+:deep(.apexcharts-annotation-lost + * + image) {
+    @apply opacity-70;
 }
 </style>

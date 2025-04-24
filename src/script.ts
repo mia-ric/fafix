@@ -1,13 +1,14 @@
 import './styles/theme.css';
 import { createApp } from 'vue';
 import Charts from './components/Charts/Charts.vue';
-import Editor from './components/Editor.vue';
+import Overlay from './components/Overlay/Overlay.vue';
+import Editor from './components/TipTap/Editor.vue';
 import prepareDemo from './core/prepare-demo';
 import manageBooks from './core/manage-books';
+import manageFavicon from './core/manage-favicon';
 import manageStatistics from './core/manage-statistics';
 import ready from './utils/ready';
 import select from './utils/select';
-import Overlay from './components/Overlay/Overlay.vue';
 
 /**
  * Main Runtime Handler
@@ -23,7 +24,7 @@ async function main() {
         let style = document.createElement('link');
         style.rel = 'stylesheet';
         style.type = 'text/css';
-        style.href = 'https://mia-ric.github.io/fafix.css';
+        style.href = DEPLOYMENT_SERVE ? 'http://localhost:7878/fafix.css' : 'https://mia-ric.github.io/fafix.css';
         document.head.append(style);
     } else {
         await prepareDemo();
@@ -72,6 +73,11 @@ async function main() {
         const app = createApp(Editor);
         const instance = app.mount(vueContainer) as any;
         instance.setTextarea(textarea);
+    }
+
+    // Handle Favicon
+    if (!window.location.hash.includes('fafix:updater')) {
+        manageFavicon();
     }
 
     // Close Window when used for updating purposes only

@@ -116,7 +116,7 @@ import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { computed, ref, onMounted, nextTick } from 'vue';
-import { bbcodeToDoc, docToBBCode } from '../utils/format';
+import { bbcodeToDoc, bbcodeToHTML, docToBBCode } from '../../utils/format';
 
 // States
 const textarea = ref<HTMLTextAreaElement>();
@@ -168,7 +168,7 @@ async function setTextarea(el: HTMLTextAreaElement) {
     if (!editor.value) {
         return;
     }
-    editor.value.commands.setContent(bbcodeToDoc(el.value));
+    editor.value.commands.setContent(bbcodeToHTML(el.value));
 
     if (source.value) {
         source.value.append(el);

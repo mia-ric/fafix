@@ -1,6 +1,14 @@
 FaFiX - Changelog
 =================
 
+## Version 0.3.0 (Beta)
+- Add: Favicon and Title indicator displaying counts for alerts and new messages.
+- Add: Different indicator-color on the statistics when any event-counter decreases.
+- Fix: Title changes incorrectly inserted a new books/statistic entry.
+- Fix: Resolved issue where `npm run serve` did not correctly provide the CSS stylesheet.
+- Fix: Issue in TipTap Editor where a space was incorrectly added before paragraphs in certain cases.
+- Fix: Corrected parsing of nested tags in TipTap Editor (using HTML instead of JSON structure).
+
 ## Version 0.2.3 (Beta)
 - Fix: Missing if-condition on statistics vue component.
 

@@ -24,7 +24,7 @@ export function useBooks() {
      * @param data 
      */
     async function upsert(data: Book | Omit<Book, 'id'>) {
-        const book = await db.books.where({ title: data.title, link: data.link }).first();
+        const book = await db.books.where({ link: data.link }).first();
         if (book) {
             return await db.books.update(book.id, data as any);
         } else {

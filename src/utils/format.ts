@@ -1,7 +1,87 @@
 import { type JSONContent } from '@tiptap/vue-3';
 
 /**
+ * Convert BBCode to HTML
+ * @param bbcode 
+ * @returns 
+ */
+export function bbcodeToHTML(bbcode: string): string {
+    const escapeHtml = (str: string): string => {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
+    const tagRegex = /\[([a-z]+)(?:\s+type="([^"]+)")?(?:\s+href="([^"]+)")?\]|\[\/([a-z]+)\]/gi;
+
+    const convert = (input: string): string => {
+        const stack: { tag: string, htmlOpen: string, htmlClose: string, attrs?: string }[] = [];
+        let output = '';
+        let lastIndex = 0;
+
+        let match: RegExpExecArray | null;
+        while ((match = tagRegex.exec(input)) !== null) {
+            const [full, openTag, typeAttr, hrefAttr, closeTag] = match;
+
+            if (match.index > lastIndex) {
+                const text = input.slice(lastIndex, match.index);
+                output += escapeHtml(text);
+            }
+
+            if (closeTag) {
+                const last = stack.pop();
+                if (last && last.tag === closeTag) {
+                    output += last.htmlClose;
+                } else {
+                    output += escapeHtml(full);
+                }
+            } else {
+                let htmlOpen = '', htmlClose = '', attrs = '';
+
+                if (openTag === 'style') {
+                    switch (typeAttr) {
+                        case 'bold': htmlOpen = '<strong>'; htmlClose = '</strong>'; break;
+                        case 'italic': htmlOpen = '<em>'; htmlClose = '</em>'; break;
+                        case 'underlined': htmlOpen = '<u>'; htmlClose = '</u>'; break;
+                        case 'linethrough': htmlOpen = '<s>'; htmlClose = '</s>'; break;
+                    }
+                } else if (openTag === 'link' && hrefAttr) {
+                    htmlOpen = `<a href="${hrefAttr}">`;
+                    htmlClose = '</a>';
+                } else if (openTag === 'align' && typeAttr) {
+                    // Setzen von text-align je nach type-Attribut
+                    attrs = `style="text-align:${typeAttr};"`;
+                    htmlOpen = `<p ${attrs}>`;
+                    htmlClose = '</p>';
+                }
+
+                output += htmlOpen;
+                stack.push({ tag: openTag, htmlOpen, htmlClose, attrs });
+            }
+
+            lastIndex = tagRegex.lastIndex;
+        }
+
+        if (lastIndex < input.length) {
+            output += escapeHtml(input.slice(lastIndex));
+        }
+
+        while (stack.length > 0) {
+            output += stack.pop()?.htmlClose;
+        }
+
+        return output;
+    };
+    
+    const paragraphs = bbcode.split(/\n{2,}/).map(p => p.trim()).filter(p => p.length > 0);
+    const htmlParagraphs = paragraphs.map(p => {
+        const result = convert(p);
+        return result.startsWith('<p') ? result : `<p>${result}</p>`;
+    });
+    return htmlParagraphs.join('\n');
+}
+
+/**
  * Convert BBCode to TipTap Document
+ * @bug doesn't support nested tags atm.
  * @param bbcode 
  * @returns 
  */
@@ -150,9 +230,11 @@ export function docToBBCode(content: JSONContent[]): string {
                 result += `[align type="${node.attrs.textAlign}"]`;
             }
             if (node.content) {
+                let inner = '';
                 node.content.forEach(subNode => {
-                    result += convertInline(subNode)
+                    inner += convertInline(subNode);
                 });
+                result += inner;
             }
             if (node.attrs?.textAlign) {
                 result += `[/align]`;
